@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("Backend  NowRunning");
+  res.send("Backend Now Running");
 });
 
 app.get("/api/message", (req, res) => {
@@ -15,11 +15,13 @@ app.get("/api/message", (req, res) => {
     message: "API is Working"
   });
 });
+
 app.get("/api/states", async (req, res) => {
-
   const users = await prisma.states.findMany();
-
   res.json(users);
-
 });
-export default app;
+
+const PORT = 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
