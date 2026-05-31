@@ -1,0 +1,29 @@
+{
+  "name": "firstnodebackend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "description": "first Backend packeage",
+  "keywords": [
+    "no"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "no"
+  },
+  "license": "ISC",
+  "author": "no",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "prisma": "^6.19.0"
+  }
+}
