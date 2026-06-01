@@ -10,32 +10,33 @@ function App() {
     api.get("/states")
       .then((response) => {
 
-        // Print response before any processing
-        console.log("FULL RESPONSE:");
-        console.log(response);
+        
+        console.log("TYPE:", typeof response.data);
+        console.log("DATA:", response.data);
+        console.log("IS ARRAY:", Array.isArray(response.data));
 
-        console.log("RESPONSE DATA:");
-        console.log(response.data);
-
-        console.log("TYPE:");
-        console.log(typeof response.data);
-
-        console.log("IS ARRAY:");
-        console.log(Array.isArray(response.data));
+        if (Array.isArray(response.data)) {
+          setStates(response.data);
+        }
 
       })
       .catch((error) => {
-
-        console.log("ERROR:");
         console.log(error);
-
       });
 
   }, []);
 
   return (
     <div>
+
       <h1>States</h1>
+
+      {states.map((state) => (
+        <div key={state.id}>
+          {state.name}
+        </div>
+      ))}
+
     </div>
   );
 }
