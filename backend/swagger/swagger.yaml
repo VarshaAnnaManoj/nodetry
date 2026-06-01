@@ -6,9 +6,10 @@ info:
   description: Express Prisma Swagger API
 
 servers:
-  - url: http://localhost:5000
+  - url: http://18.191.251.193:5000
 
 paths:
+
   /:
     get:
       summary: Home Route
@@ -24,8 +25,89 @@ paths:
           description: API message returned
 
   /api/states:
+
     get:
       summary: Get all states
       responses:
         '200':
           description: List of states
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    state:
+                      type: string
+
+    post:
+      summary: Create a new state
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                state:
+                  type: string
+                  example: Kerala
+
+      responses:
+        '201':
+          description: State created successfully
+
+  /api/states/{id}:
+
+    get:
+      summary: Get state by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: State found
+
+    put:
+      summary: Update state by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                state:
+                  type: string
+                  example: Ontario
+
+      responses:
+        '200':
+          description: State updated successfully
+
+    delete:
+      summary: Delete state by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: State deleted successfully

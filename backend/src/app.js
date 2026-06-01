@@ -61,6 +61,30 @@ app.get("/api/states", async (req, res) => {
     });
   }
 });
+app.post("/api/states", async (req, res) => {
+  try {
+
+    const { name, capital } = req.body;
+
+    const newState = await prisma.states.create({
+      data: {
+        name,
+        capital
+      }
+    });
+
+    res.status(201).json(newState);
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      error: "Failed to create state"
+    });
+
+  }
+});
 
 /*
   Server
