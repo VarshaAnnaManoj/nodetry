@@ -10,7 +10,10 @@ function App() {
     api.get("/states")
       .then((response) => {
 
-        console.log(response.data);
+        
+        console.log("TYPE:", typeof response.data);
+        console.log("DATA:", response.data);
+        console.log("IS ARRAY:", Array.isArray(response.data));
 
         if (Array.isArray(response.data)) {
           setStates(response.data);
