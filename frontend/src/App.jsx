@@ -10,8 +10,11 @@ function App() {
     api.get("/states")
       .then((response) => {
 
-        setStates(response.data);
         console.log(response.data);
+
+        if (Array.isArray(response.data)) {
+          setStates(response.data);
+        }
 
       })
       .catch((error) => {
@@ -25,8 +28,8 @@ function App() {
 
       <h1>States</h1>
 
-      {states.map((state, index) => (
-        <div key={index}>
+      {states.map((state) => (
+        <div key={state.id}>
           {state.name}
         </div>
       ))}
