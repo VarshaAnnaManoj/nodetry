@@ -10,17 +10,25 @@ function App() {
     api.get("/states")
       .then((response) => {
 
-        
-        console.log("TYPE:", typeof response.data);
-        console.log("DATA:", response.data);
-        console.log("IS ARRAY:", Array.isArray(response.data));
+        console.log("FULL RESPONSE:");
+        console.log(response);
 
+        console.log("RESPONSE DATA:");
+        console.log(response.data);
+
+        console.log("IS ARRAY:");
+        console.log(Array.isArray(response.data));
+
+        // Only set if response is array
         if (Array.isArray(response.data)) {
           setStates(response.data);
+        } else {
+          console.log("Response is not array");
         }
 
       })
       .catch((error) => {
+        console.log("API ERROR:");
         console.log(error);
       });
 
@@ -31,8 +39,14 @@ function App() {
 
       <h1>States</h1>
 
-      {states.map((state) => (
-        <div key={state.id}>
+      {/* Display raw data for debugging */}
+      <pre>
+        {JSON.stringify(states, null, 2)}
+      </pre>
+
+      {/* Actual rendering */}
+      {Array.isArray(states) && states.map((state, index) => (
+        <div key={index}>
           {state.name}
         </div>
       ))}
