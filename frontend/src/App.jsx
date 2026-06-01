@@ -11,6 +11,7 @@ function App() {
       .then((response) => {
 
         setStates(response.data);
+        console.log(response.data);
 
       })
       .catch((error) => {
