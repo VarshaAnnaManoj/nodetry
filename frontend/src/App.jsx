@@ -7,7 +7,7 @@ function App() {
 
   useEffect(() => {
 
-    api.get("/api/states")
+    api.get("/states")
       .then((response) => {
 
         setStates(response.data);
