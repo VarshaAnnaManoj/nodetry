@@ -8,15 +8,15 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Verify Secret Exists
-        env: 
+
+      - name: Verify PAT Exists
+        env:
           AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
         run: |
           if [ -z "$AZURE_DEVOPS_PAT" ]; then
@@ -26,12 +26,14 @@ jobs:
             echo "PAT found"
           fi
 
-      - name: Add Azure Remote
-        env: 
+      - name: Verify Azure Repo Access
+        env:
           AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
         run: |
-          git ls-remote https://manoonam1729:${AZURE_DEVOPS_PAT}@dev.azure.com/manoonam1729/ManoDeployment/_git/ManoDeployment
+          git ls-remote https://git:${AZURE_DEVOPS_PAT}@dev.azure.com/manoonam1729/ManoDeployment/_git/ManoDeployment
 
       - name: Push to Azure Repos
+        env:
+          AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
         run: |
-          git push azure main
+          git push https://git:${AZURE_DEVOPS_PAT}@dev.azure.com/manoonam1729/ManoDeployment/_git/ManoDeployment HEAD:main
