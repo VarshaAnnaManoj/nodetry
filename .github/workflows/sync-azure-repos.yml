@@ -27,8 +27,10 @@ jobs:
           fi
 
       - name: Add Azure Remote
+        env: 
+          AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
         run: |
-          git remote add azure https://${{ secrets.AZURE_DEVOPS_PAT }}@dev.azure.com/manoonam1729/ManoDeployment/_git/ManoDeployment
+          git remote add azure https://${AZURE_DEVOPS_PAT }@dev.azure.com/manoonam1729/ManoDeployment/_git/ManoDeployment
 
       - name: Push to Azure Repos
         run: |
