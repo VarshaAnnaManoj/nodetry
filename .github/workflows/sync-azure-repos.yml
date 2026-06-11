@@ -17,7 +17,7 @@ jobs:
 
       - name: Add Azure Remote
         run: |
-          git remote add azure https://${{ secrets.AZURE_DEVOPS_PAT }}@dev.azure.com/manoonam1729/<PROJECTNAME>/_git/<REPONAME>
+          git remote add azure https://${{ secrets.AZURE_DEVOPS_PAT }}@dev.azure.com/manoonam1729/ManoDeployment/_git/ManoDeployment
 
       - name: Push to Azure Repos
         run: |
