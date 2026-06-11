@@ -8,12 +8,23 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Verify Secret Exists
+        env: 
+          AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
+        run: |
+          if [ -z "$AZURE_DEVOPS_PAT" ]; then
+            echo "PAT is empty"
+            exit 1
+          else
+            echo "PAT found"
+          fi
 
       - name: Add Azure Remote
         run: |
