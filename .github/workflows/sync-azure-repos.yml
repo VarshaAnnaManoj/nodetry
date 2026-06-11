@@ -1,0 +1,21 @@
+name: Sync GitHub to Azure Repos
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to Azure Repos
+        run: |
+          git remote add azure https://${{ secrets.AZURE_DEVOPS_PAT }}@${{ secrets.AZURE_REPO_URL#https:// }}
+          git push azure main --force
