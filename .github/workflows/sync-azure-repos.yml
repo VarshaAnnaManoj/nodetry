@@ -15,7 +15,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Add Azure Remote
+        run: |
+          git remote add azure https://${{ secrets.AZURE_DEVOPS_PAT }}@dev.azure.com/manoonam1729/<PROJECTNAME>/_git/<REPONAME>
+
       - name: Push to Azure Repos
         run: |
-          git remote add azure https://${{ secrets.AZURE_DEVOPS_PAT }}@${{ secrets.AZURE_REPO_URL#https:// }}
-          git push azure main --force
+          git push azure main
