@@ -1,0 +1,95 @@
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  vmImageName: 'ubuntu-latest'
+  dockerRegistryServiceConnection: 'AlphaContainerReg'
+  tag: '$(Build.BuildId)'
+
+stages:
+
+# ======================================
+# Build Backend
+# ======================================
+- stage: BuildBackend
+  displayName: Build Backend
+
+  jobs:
+  - job: BuildBackend
+
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+    - task: Docker@2
+      displayName: Build and Push Backend
+
+      inputs:
+        command: buildAndPush
+        repository: nodetrybackend
+        dockerfile: '$(Build.SourcesDirectory)/backend/Dockerfile'
+        containerRegistry: $(dockerRegistryServiceConnection)
+
+        tags: |
+          $(tag)
+          latest
+
+
+# ======================================
+# Build Frontend
+# ======================================
+- stage: BuildFrontend
+  displayName: Build Frontend
+  dependsOn: BuildBackend
+
+  jobs:
+  - job: BuildFrontend
+
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+    - task: Docker@2
+      displayName: Build and Push Frontend
+
+      inputs:
+        command: buildAndPush
+        repository: nodetryfrontend
+        dockerfile: '$(Build.SourcesDirectory)/frontend/Dockerfile'
+        containerRegistry: $(dockerRegistryServiceConnection)
+
+        tags: |
+          $(tag)
+          latest
+
+
+# ======================================
+# Deploy To VM
+# ======================================
+- stage: Deploy
+  displayName: Deploy To VM
+  dependsOn: BuildFrontend
+
+  jobs:
+  - job: Deploy
+
+    pool:
+      name: AlphaAgent
+
+    steps:
+
+    - powershell: |
+        docker login alphacontainerreg.azurecr.io `
+          -u $(ACR_USERNAME) `
+          -p $(ACR_PASSWORD)
+
+        cd C:\projects\nodetry
+
+        docker compose pull
+
+        docker compose up -d
+
+      displayName: Deploy Application
