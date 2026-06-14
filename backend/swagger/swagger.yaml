@@ -6,7 +6,7 @@ info:
   description: Express Prisma Swagger API
 
 servers:
-  - url: http://20.11.34.0:5000
+  - url: http://20.11.34.0
 
 paths:
 
