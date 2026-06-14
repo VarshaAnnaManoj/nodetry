@@ -6,16 +6,9 @@ info:
   description: Express Prisma Swagger API
 
 servers:
-  - url: http://20.11.34.0
+  - url: /
 
 paths:
-
-  /:
-    get:
-      summary: Home Route
-      responses:
-        '200':
-          description: Success
 
   /api/message:
     get:
